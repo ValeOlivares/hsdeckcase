@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "hsdeckcase",
-    "hs": "hsdeckcase"
+    "hs": "hsdeckcase",
+    "case": "hsdeckcase"
   }
 }
