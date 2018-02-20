@@ -1,7 +1,6 @@
 {
   "projects": {
     "default": "hsdeckcase",
-    "hearthstone": "hsdeckcase",
-    "deckcase": "hsdeckcase"
+    "hs": "hsdeckcase"
   }
 }

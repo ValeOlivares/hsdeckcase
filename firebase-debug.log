@@ -1,0 +1,32 @@
+[debug] [2018-02-20T14:47:29.719Z] ----------------------------------------------------------------------
+[debug] [2018-02-20T14:47:29.722Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\valen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-02-20T14:47:29.722Z] CLI Version:   3.17.4
+[debug] [2018-02-20T14:47:29.722Z] Platform:      win32
+[debug] [2018-02-20T14:47:29.722Z] Node Version:  v8.9.4
+[debug] [2018-02-20T14:47:29.723Z] Time:          Tue Feb 20 2018 11:47:29 GMT-0300 (Hora verano Sudamérica Pacífico)
+[debug] [2018-02-20T14:47:29.723Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-02-20T14:47:29.737Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-02-20T14:47:29.738Z] > authorizing via signed-in user
+[debug] [2018-02-20T14:47:29.741Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/hsdeckcase  
+  
+ Tue Feb 20 2018 11:47:29 GMT-0300 (Hora verano Sudamérica Pacífico)
+[debug] [2018-02-20T14:47:30.650Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-20T14:47:30.653Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/hsdeckcase/tokens  
+  
+ Tue Feb 20 2018 11:47:30 GMT-0300 (Hora verano Sudamérica Pacífico)
+[debug] [2018-02-20T14:47:31.420Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\valen\OneDrive\Documentos\Laboratoria\Front-end\hsdeckcase'...
+[info] 
+[debug] [2018-02-20T14:47:31.428Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/hsdeckcase  
+  
+ Tue Feb 20 2018 11:47:31 GMT-0300 (Hora verano Sudamérica Pacífico)
+[debug] [2018-02-20T14:47:32.499Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-20T14:47:32.500Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/538773947109/clients/_:getWebAppConfig  
+  
+ Tue Feb 20 2018 11:47:32 GMT-0300 (Hora verano Sudamérica Pacífico)
+[debug] [2018-02-20T14:47:33.122Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] +  hosting: Local server: http://localhost:5000
+
