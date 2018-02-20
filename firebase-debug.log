@@ -1,32 +1,41 @@
-[debug] [2018-02-20T14:47:29.719Z] ----------------------------------------------------------------------
-[debug] [2018-02-20T14:47:29.722Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\valen\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
-[debug] [2018-02-20T14:47:29.722Z] CLI Version:   3.17.4
-[debug] [2018-02-20T14:47:29.722Z] Platform:      win32
-[debug] [2018-02-20T14:47:29.722Z] Node Version:  v8.9.4
-[debug] [2018-02-20T14:47:29.723Z] Time:          Tue Feb 20 2018 11:47:29 GMT-0300 (Hora verano Sudamérica Pacífico)
-[debug] [2018-02-20T14:47:29.723Z] ----------------------------------------------------------------------
+[debug] [2018-02-20T14:55:17.684Z] ----------------------------------------------------------------------
+[debug] [2018-02-20T14:55:17.686Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ire\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase serve
+[debug] [2018-02-20T14:55:17.687Z] CLI Version:   3.17.4
+[debug] [2018-02-20T14:55:17.687Z] Platform:      win32
+[debug] [2018-02-20T14:55:17.687Z] Node Version:  v8.9.3
+[debug] [2018-02-20T14:55:17.687Z] Time:          Tue Feb 20 2018 11:55:17 GMT-0300 (Pacific SA Daylight Time)
+[debug] [2018-02-20T14:55:17.687Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-02-20T14:47:29.737Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-02-20T14:47:29.738Z] > authorizing via signed-in user
-[debug] [2018-02-20T14:47:29.741Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/hsdeckcase  
+[debug] [2018-02-20T14:55:17.705Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-02-20T14:55:17.706Z] > authorizing via signed-in user
+[debug] [2018-02-20T14:55:17.708Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-02-20T14:55:17.709Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/q1wHppLrx7d1IIV-tDV3go2RyJzRKUyjnl3bz4RJe0AhWHBvwoW-E_7lmHy-7PnT',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue Feb 20 2018 11:55:17 GMT-0300 (Pacific SA Daylight Time)
+[debug] [2018-02-20T14:55:18.847Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-20T14:55:18.852Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/hsdeckcase  
   
- Tue Feb 20 2018 11:47:29 GMT-0300 (Hora verano Sudamérica Pacífico)
-[debug] [2018-02-20T14:47:30.650Z] <<< HTTP RESPONSE 200
-[debug] [2018-02-20T14:47:30.653Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/hsdeckcase/tokens  
+ Tue Feb 20 2018 11:55:18 GMT-0300 (Pacific SA Daylight Time)
+[debug] [2018-02-20T14:55:20.097Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-20T14:55:20.099Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/hsdeckcase/tokens  
   
- Tue Feb 20 2018 11:47:30 GMT-0300 (Hora verano Sudamérica Pacífico)
-[debug] [2018-02-20T14:47:31.420Z] <<< HTTP RESPONSE 200
+ Tue Feb 20 2018 11:55:20 GMT-0300 (Pacific SA Daylight Time)
+[debug] [2018-02-20T14:55:22.312Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Serving from 'C:\Users\valen\OneDrive\Documentos\Laboratoria\Front-end\hsdeckcase'...
+[info] === Serving from 'C:\Users\Ire\Desktop\Laboratoria\hsdeckcase'...
 [info] 
-[debug] [2018-02-20T14:47:31.428Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/hsdeckcase  
+[debug] [2018-02-20T14:55:22.319Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/hsdeckcase  
   
- Tue Feb 20 2018 11:47:31 GMT-0300 (Hora verano Sudamérica Pacífico)
-[debug] [2018-02-20T14:47:32.499Z] <<< HTTP RESPONSE 200
-[debug] [2018-02-20T14:47:32.500Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/538773947109/clients/_:getWebAppConfig  
+ Tue Feb 20 2018 11:55:22 GMT-0300 (Pacific SA Daylight Time)
+[debug] [2018-02-20T14:55:28.090Z] <<< HTTP RESPONSE 200
+[debug] [2018-02-20T14:55:28.091Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/538773947109/clients/_:getWebAppConfig  
   
- Tue Feb 20 2018 11:47:32 GMT-0300 (Hora verano Sudamérica Pacífico)
-[debug] [2018-02-20T14:47:33.122Z] <<< HTTP RESPONSE 200
+ Tue Feb 20 2018 11:55:28 GMT-0300 (Pacific SA Daylight Time)
+[debug] [2018-02-20T14:55:29.753Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: ./
 [info] +  hosting: Local server: http://localhost:5000
 

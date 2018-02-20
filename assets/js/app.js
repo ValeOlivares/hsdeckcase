@@ -28,6 +28,30 @@ hsdeckcase.prototype.onAuthStateChanged = function(user) {
    }
 };
 
-window.onload = function() {
+$(document).ready(function(){
+	// $('.materialboxed').materialbox();
 	hsdeckcase = new hsdeckcase();
-};
+	recomend();
+});
+
+function recomend() {
+	$.ajax({
+    url: 'https://omgvamp-hearthstone-v1.p.mashape.com/cards?attack=1&collectible=1',
+    headers: { 'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI' },
+    success : function (data) {
+      let array = $.map(data, function(value, index) {
+        return [value];
+      });
+      console.log(data); 
+      let newExpansion = array[9];
+      console.log(newExpansion.lenght);
+      $(newExpansion).each(function(i) {
+				console.log(newExpansion[i].img);
+				$('#recomendation').append(
+					`<img class="responsive-img" src="${newExpansion[i].img}">`
+				);
+        
+      });
+	 	}
+	});
+}
