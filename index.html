@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<title>Hs Deck Case</title>
+	<link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -12,28 +13,61 @@
 
 <body>
 	<nav class="navColor">
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo"><img class="logoImg" src="assets/images/logo.png" alt=""></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><button class="bwaves-effect waves-teal btn-flat button" id="signIn">login</button></li>
-        <li><button class="waves-effect waves-teal btn-flat button" id="signOut">logout</button></li>
-        <li><button class="bwaves-effect waves-teal btn-flat button" id="account">account</button></li>
-      </ul>
-    </div>
-  </nav>
+		<div class="nav-wrapper">
+			<a href="#" class="brand-logo" onclick="recommend()">
+				<img class="logoImg" src="assets/img/logo.png" alt="">
+			</a>
+			<ul id="nav-mobile" class="right">
+				<li>
+					<button class="bwaves-effect waves-teal btn-flat button" id="signIn">login</button>
+				</li>
+				<li>
+					<button class="waves-effect waves-teal btn-flat button hide" id="signOut">logout</button>
+				</li>
+				<li>
+					<button class="bwaves-effect waves-teal btn-flat button hide" id="account">Decks</button>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
-	<form id="searchBar" action=""> 
-		<div class="col m10">
-			<i class="material-icons prefix">search</i>
-			<input id="icon_prefix" type="text" class="validate">
-			<label for="icon_prefix">Search Card</label>
+	<div class="row">
+		<form id="searchBar" class="col s10 offset-s1 m10 offset-m1 l10 offset-l1">
+			<div class="row">
+				<div class="input-field col s10">
+					<i class="material-icons prefix">search</i>
+					<input id="icon_prefix" type="text" class="validate">
+					<label class="black-text" for="icon_prefix">Search for Cards</label>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<section id="recommendation" class="s10 offset-s1 m10 offset-m1 l10 offset-l1"></section>
+
+	<div id="modalAdd" class="modal">
+		<div class="modal-content">
+
+			<h4>Add Card To Your Deck</h4>
+			<div class="row">
+				<div class="input-field col s12">
+					<input id="newDeck" type="text" class="validate">
+					<label for="email">Add to New Deck</label>
+				</div>
+				<a id="submitNewDeck" class="addcards waves-effect waves-light btn black amber-text text-lighten-1">Add to New Deck</a>
+			</div>
+			<br>
+			<div id="selectMenu" class="input-field col s12">
+
+			</div>
+			<a id="submit" class="addcards waves-effect waves-light btn black amber-text text-lighten-1">Add to Existing Deck</a>
+
+			<div class="modal-footer">
+			</div>
 
 		</div>
-
-
-	</form>
-
-	<section id="recomendation" class="cardContainer"></section>
+	</div>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	 crossorigin="anonymous"></script>

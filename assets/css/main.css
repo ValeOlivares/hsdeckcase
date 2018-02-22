@@ -1,5 +1,5 @@
 body {
-	background-image: url(../images/wallpaper.jpg);
+	background-image: url(../img/wallpaper.jpg);
 	min-height: 100vh;
 	background-repeat: no-repeat;
   	background-size:cover;
@@ -21,8 +21,22 @@ body {
 	width: 50px;
 }
 
-.cardContainer {
-	display: flex;
-	flex-wrap: wrap;
+#decksMenu{
+  width: 80%;
+}
+
+#recommendation{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.input-field {
+  margin-top: 1em;
+}
+
+#modalAdd{
+  text-align: center;
 }
 

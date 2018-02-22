@@ -1,9 +1,11 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // $('.materialboxed').materialbox();
   hsdeckcase = new hsdeckcase();
   recommend();
   $('#icon_prefix').val('');
   $('.collapsible').collapsible();
+  $('.modal').modal();
+
 });
 
 function hsdeckcase() {
@@ -12,68 +14,107 @@ function hsdeckcase() {
   this.account = document.getElementById('account');
   this.signInButton.addEventListener('click', this.signIn.bind(this));
   this.signOutButton.addEventListener('click', this.signOut.bind(this));
-  this.account.addEventListener('click', loadProfile.bind(this));
+  this.account.addEventListener('click', showDecks.bind(this));
   this.initFirebase();
 };
 
-hsdeckcase.prototype.signIn = function() {
+hsdeckcase.prototype.signIn = function () {
   var provider = new firebase.auth.GoogleAuthProvider();
   this.auth.signInWithPopup(provider);
+  $('div > a').removeClass('hide');
 };
 
-hsdeckcase.prototype.signOut = function() {
+hsdeckcase.prototype.signOut = function () {
   this.auth.signOut();
   $('#recommendation').empty();
   recommend();
+  $('div > a').addClass('hide');
 };
 
-hsdeckcase.prototype.initFirebase = function() {
+hsdeckcase.prototype.initFirebase = function () {
   this.auth = firebase.auth();
   this.database = firebase.database();
   this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
 };
 
-hsdeckcase.prototype.onAuthStateChanged = function(user) {
+hsdeckcase.prototype.onAuthStateChanged = function (user) {
   if (user) {
-    console.log(':D');
+    $('#signOut').removeClass('hide');
+    $('#account').removeClass('hide');
+    $('div > a').removeClass('hide');
+    $('#signIn').addClass('hide');
+    loadProfile();
   } else {
-    console.log(':(');
+    $('#signOut').addClass('hide');
+    $('#account').addClass('hide');
+    $('#signIn').removeClass('hide');
   }
 };
+let userDecks;
 
 var loadProfile = function() {
-  console.log('loadprofile');
-    
+
   let usersRef = firebase.database().ref('users');
   const currentUser = firebase.auth().currentUser;
-  
+
   usersRef.on('value', function(snapshot) {
     const users = snapshot.val();
-    for (uid in users) {  
+    for (uid in users) {
       if (currentUser.uid === uid) {
-        showDecks(users[uid]);
+        userDecks = users[uid].decks;
+        $('#selectMenu').empty();
+        $('#selectMenu').append(
+          `<select id="deckList">
+          <option value="" disabled selected>Add to an Existing Deck</option>
+        </select>`
+        );
+        for (key in userDecks) {
+          $('#deckList').append(
+            `<option value="${key}">${key}</option>`
+          );
+        }
       }
     }
+    $('#submit').click(function() {
+      let deck = $('#deckList').val()
+      if (deck !== null) {
+        $('#modalAdd').modal('close');
+        addCardToDeck(id, deck);
+      }
+    });
+    $('select').material_select();
   });
 };
 
-function showDecks(userDecks) {
+$('#submitNewDeck').click(function(event) {
+  create(event);
+});
+$('#newDeck').on('keypress', function(event) {
+  create(event);
+});
+
+let create = function(event) {
+  let deck = $('#newDeck').val();
+  if (event.which === 13) {
+    $('#modalAdd').modal('close');
+    $('#newDeck').val('');
+    addDeck(id, deck);
+  }
+};
+
+function showDecks() {
   let counter = 0;
   $('#recommendation').empty();
   $('#recommendation').append(`
     <ul id="decksMenu" class="collapsible" data-collapsible="accordion"></ul>
     `);
-  let decks = userDecks.decks;
+  let decks = userDecks;
 
-  let captureHelper = function(obj, counter) {
+  let captureHelper = function (obj, counter) {
     cardsOnDeck(obj, counter);
-    // $(`#btn_${counter}`).click(function() {
-    // });
   }
-  
+
   for (key in decks) {
-    console.log('key: ' + key);
-    console.log(decks[key].cards);
 
     $('#decksMenu').append(
       `<li>
@@ -82,84 +123,56 @@ function showDecks(userDecks) {
       </li>`
     );
     captureHelper(decks[key].cards, counter);
-    counter ++;
+    counter++;
     $('.collapsible').collapsible();
-  } 
+  }
 }
 
 function cardsOnDeck(cards, counter) {
-  console.log(cards);
-  console.log(counter);
   for (key in cards) {
     let card = cards[key].cardId;
-    console.log(cards[key].cardId);
     $.ajax({
       url: `https://omgvamp-hearthstone-v1.p.mashape.com/cards/${card}`,
-      headers: { 'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI',
-        'Accept': 'application/json' },
-      success: function(data) {
-        console.log(data);
-        for (let i = 0; i < data.length; i ++) {
-          console.log(data[i].imgGold);  
+      headers: {
+        'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI',
+        'Accept': 'application/json'
+      },
+      success: function (data) {
+        for (let i = 0; i < data.length; i++) {
           $(`#body_${counter}`).append(
             `<img class="responsive-img" src="${data[i].img}">`
           );
         }
       }
-    });	
-    
+    });
   }
-  // $(`#body_${counter}`).append(`<p>${counter}</p>`);
 }
 
-var saveProfile = function(cardId, deck1 ,btn) {
-  console.log(firebase.auth().currentUser);
-  let user = firebase.auth().currentUser;
-
-  if ($(user).length) {
-    console.log('funcion saveProfile activated');
-    btn.style.color = 'green';
-    let profileRef = firebase.database().ref('profile');
-    profileRef.off();
-
-    const currentUser = firebase.auth().currentUser;
-    profileRef.push({
-      deck1: [cardId],
-      userUid: currentUser.uid,
-    });
-
-  } else {
-    alert('Por favor inicia sesion primero.')
-  }
-};
-
-function createUser(cardId, deck1 ,btn) {
+function createUser(cardId, deck) {
   let userId = firebase.auth().currentUser.uid;
-
-  btn.style.color = 'green';
   let newUserRef = firebase.database().ref(`users/${userId}`);
   newUserRef.set({
     'decks': {}
   });
 
-  addDeck(cardId, deck1 ,btn);
-  addCardToDeck(cardId, deck1 ,btn);
+  addDeck(cardId, deck);
+  addCardToDeck(cardId, deck);
 };
 
-function addDeck(cardId, deck1 ,btn) {
+function addDeck(cardId, deck) {
   let userId = firebase.auth().currentUser.uid;
-  let decksRef = firebase.database().ref(`users/${userId}/decks/${deck1}`);
-  
+  let decksRef = firebase.database().ref(`users/${userId}/decks/${deck}`);
+
   decksRef.set({
     'cards': {}
   });
 
-  addCardToDeck(cardId, deck1 ,btn);
+  addCardToDeck(cardId, deck);
 };
 
-function addCardToDeck(cardId, deck1 ,btn) {
+function addCardToDeck(cardId, deck) {
   let userId = firebase.auth().currentUser.uid;
-  let cardsRef = firebase.database().ref(`users/${userId}/decks/${deck1}/cards`);
+  let cardsRef = firebase.database().ref(`users/${userId}/decks/${deck}/cards`);
 
   let newCardRef = cardsRef.push();
   newCardRef.set({
@@ -168,13 +181,15 @@ function addCardToDeck(cardId, deck1 ,btn) {
 };
 
 function recommend() {
+  $('#recommendation').empty();
   $.ajax({
     url: 'https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/Kobolds%20%26%20Catacombs?collectible=1',
-    headers: { 'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI',
-      'Accept': 'application/json'},
-    success: function(data) { 
+    headers: {
+      'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI',
+      'Accept': 'application/json'
+    },
+    success: function(data) {
 
-      console.log(data[0]);
       let max = data.length - 1;
       let min = 0;
       let arr = [];
@@ -184,43 +199,83 @@ function recommend() {
           arr.push(random);
           i++;
         }
-        
-
       }
 
-      for (e of arr) {
-        // console.log(data[e].cardId);
-        
-        $('#recommendation').append(
-          `<div class="col m4">
-          <img class="responsive-img" src="${data[e].img}">
-          <button onclick="addCardToDeck('${data[e].cardId}', 'deck1',this)">Add</button>
-          </div>`
-        );	
+      let user = firebase.auth().currentUser;
+      if (!user) {
+        for (e of arr) {
+          $('#recommendation').append(
+            `<div class="col s12 m2 l3">
+              <div class="row">
+                <img class="responsive-img" src="${data[e].img}">
+              </div>
+              <div class="row">
+              <a  class="addcards hide waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd" data="${data[e].cardId}" onclick="showCardId(this)">Add</a>
+            </div>`
+          );
+        }
+      } else {
+        for (e of arr) {
+          $('#recommendation').append(
+            `<div class="col s12 m2 l3">
+              <div class="row">
+                <img class="responsive-img" src="${data[e].img}">
+              </div>
+              <div class="row">
+              <a  class="addcards waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd" data="${data[e].cardId}" onclick="showCardId(this)">Add</a>
+            </div>`
+          );
+        }
       }
     }
   });
 }
+let id;
+function showCardId(cardId) {
+  loadProfile();
+  id = $(cardId).attr('data');
+}
 
-$('#searchBar').submit(function(e) {
+$('#searchBar').submit(function (e) {
   e.preventDefault();
   let userSearch = $('#icon_prefix').val();
-  console.log(userSearch);
   $('#icon_prefix').val('');
 
   $.ajax({
-    url: `https://omgvamp-hearthstone-v1.p.mashape.com/cards/${userSearch}`,
+    url: `https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${userSearch}?collectible=1`,
     headers: { 'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI' },
     success: function(data) {
-      console.log(data);
       $('#recommendation').empty();
-      for (let i = 0; i < data.length; i ++) {
-        console.log(data[i].imgGold);
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].img === undefined) {
 
-        $('#recommendation').append(
-          `<img class="responsive-img" src="${data[i].imgGold}">`
-        );
+        } else {
+          let user = firebase.auth().currentUser;
+          if (!user) {
+            $('#recommendation').append(
+              `<div class="col s12 m2 l3">
+                <div class="row">
+                  <img class="responsive-img" src="${data[i].img}">
+                </div>
+                <div class="row">
+                <a  class="addcards hide waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" data="${data[i].cardId}" onclick="showCardId(this)" href="#modalAdd">Add</a>
+              </div>`
+            );
+
+          } else {
+            $('#recommendation').append(
+              `<div class="col s12 m2 l3">
+                <div class="row">
+                  <img class="responsive-img" src="${data[i].img}">
+                </div>
+                <div class="row">
+                <a  class="addcards waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd" data="${data[i].cardId}" onclick="showCardId(this)">Add</a>
+              </div>`
+            );
+          }
+        }
       }
     }
-  });	
+  });
 });
+
