@@ -172,10 +172,21 @@ $('#searchBar').submit(function (e) {
 				console.log(data[i].imgGold);
 
 				$('#recomendation').append(
-					`<img class="responsive-img" src="${data[i].imgGold}">`
+				`
+				<div class="cardContainer col m3 s2">
+				<img class="responsive-img" src="${data[i].imgGold}">
+				<div class="fixed-action-btn horizontal click-to-toggle"><a>
+    	<img src="assets/images/icon.png" alt="" class="material-icons icon"  >
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
+ 				</div>`
 				);
-
-
 			}
 		}
 	})	
