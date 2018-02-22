@@ -39,14 +39,12 @@ hsdeckcase.prototype.initFirebase = function () {
 
 hsdeckcase.prototype.onAuthStateChanged = function (user) {
   if (user) {
-    console.log(':D');
     $('#signOut').removeClass('hide');
     $('#account').removeClass('hide');
     $('div > a').removeClass('hide');
     $('#signIn').addClass('hide');
     loadProfile();
   } else {
-    console.log(':(');
     $('#signOut').addClass('hide');
     $('#account').addClass('hide');
     $('#signIn').removeClass('hide');
@@ -54,8 +52,7 @@ hsdeckcase.prototype.onAuthStateChanged = function (user) {
 };
 let userDecks;
 
-var loadProfile = function () {
-  console.log('loadprofile');
+var loadProfile = function() {
 
   let usersRef = firebase.database().ref('users');
   const currentUser = firebase.auth().currentUser;
@@ -64,8 +61,6 @@ var loadProfile = function () {
     const users = snapshot.val();
     for (uid in users) {
       if (currentUser.uid === uid) {
-        // showDecks(users[uid]);
-        console.log(users[uid].decks);
         userDecks = users[uid].decks;
         $('#selectMenu').empty();
         $('#selectMenu').append(
@@ -102,14 +97,12 @@ let create = function(event) {
   let deck = $('#newDeck').val();
   if (event.which === 13) {
     $('#modalAdd').modal('close');
-    console.log(deck);
+    $('#newDeck').val('');
     addDeck(id, deck);
   }
 };
 
 function showDecks() {
-  console.log(userDecks);
-
   let counter = 0;
   $('#recommendation').empty();
   $('#recommendation').append(`
@@ -152,9 +145,7 @@ function cardsOnDeck(cards, counter) {
         }
       }
     });
-
   }
-  // $(`#body_${counter}`).append(`<p>${counter}</p>`);
 }
 
 function createUser(cardId, deck) {
@@ -197,9 +188,8 @@ function recommend() {
       'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI',
       'Accept': 'application/json'
     },
-    success: function (data) {
+    success: function(data) {
 
-      console.log(data[0]);
       let max = data.length - 1;
       let min = 0;
       let arr = [];
@@ -220,7 +210,7 @@ function recommend() {
                 <img class="responsive-img" src="${data[e].img}">
               </div>
               <div class="row">
-              <a  class="addcards hide waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd" onclick="showCardId(${data[e].cardId})">Add</a>
+              <a  class="addcards hide waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd" data="${data[e].cardId}" onclick="showCardId(this)">Add</a>
             </div>`
           );
         }
@@ -242,25 +232,21 @@ function recommend() {
 }
 let id;
 function showCardId(cardId) {
+  loadProfile();
   id = $(cardId).attr('data');
-  console.log(id);
-
 }
 
 $('#searchBar').submit(function (e) {
   e.preventDefault();
   let userSearch = $('#icon_prefix').val();
-  console.log(userSearch);
   $('#icon_prefix').val('');
 
   $.ajax({
     url: `https://omgvamp-hearthstone-v1.p.mashape.com/cards/search/${userSearch}?collectible=1`,
     headers: { 'X-Mashape-Key': 'NJIHT5oJPOmshEzdDx649UwbKafBp1ZU9GKjsniDdm9PGi4hNI' },
-    success: function (data) {
-      console.log(data);
+    success: function(data) {
       $('#recommendation').empty();
       for (let i = 0; i < data.length; i++) {
-        console.log(data[i].img);
         if (data[i].img === undefined) {
 
         } else {
@@ -272,7 +258,7 @@ $('#searchBar').submit(function (e) {
                   <img class="responsive-img" src="${data[i].img}">
                 </div>
                 <div class="row">
-                <a  class="addcards hide waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd">Add</a>
+                <a  class="addcards hide waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" data="${data[i].cardId}" onclick="showCardId(this)" href="#modalAdd">Add</a>
               </div>`
             );
 
@@ -283,7 +269,7 @@ $('#searchBar').submit(function (e) {
                   <img class="responsive-img" src="${data[i].img}">
                 </div>
                 <div class="row">
-                <a  class="addcards waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd">Add</a>
+                <a  class="addcards waves-effect waves-light btn black amber-text text-lighten-1 modal-trigger" href="#modalAdd" data="${data[i].cardId}" onclick="showCardId(this)">Add</a>
               </div>`
             );
           }
