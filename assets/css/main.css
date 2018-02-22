@@ -1,0 +1,28 @@
+body {
+	background-image: url(../images/wallpaper.jpg);
+	height: 100vh;
+	background-repeat: no-repeat;
+  	background-position: 50% 50%;
+  	background-size:cover;
+}
+
+.navColor {
+	background-color: #000;
+}
+
+.button {
+	color: #E8BB30;
+}
+
+.logoImg {
+	height: 70px;
+}
+
+.icon {
+	width: 50px;
+}
+
+.cardContainer {
+	display: flex;
+	flex-wrap: nowrap | wrap | wrap-reverse;
+}
