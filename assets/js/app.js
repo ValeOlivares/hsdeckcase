@@ -119,7 +119,7 @@ function showDecks() {
     $('#decksMenu').append(
       `<li>
         <div id="btn_${counter}" class="collapsible-header">${key}</div>
-        <div id="body_${counter}" class="collapsible-body"></div>
+        <div id="body_${counter}" class="collapsible-body background"></div>
       </li>`
     );
     captureHelper(decks[key].cards, counter);
